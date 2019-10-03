@@ -22,7 +22,7 @@ from keras.preprocessing.image import img_to_array
 import requests
 
 application = app = Flask(__name__)
-api = Api(app, version='1.0', title='Concept Art Gender Identifier', description='Gender Identification Service')
+api = Api(app, version='1.0', title='Concept Art Monster Identifier', description='Monster Identification Service')
 
 ns = api.namespace('jamiejamiebobamie', description='Methods')
 
@@ -30,7 +30,7 @@ single_parser = api.parser()
 single_parser.add_argument('img', location='files',
                            type=FileStorage, required=True, help= 'uploadedImage')
 
-logreg_classifier_from_joblib = joblib.load('logreg_classifier.pkl')
+logreg_classifier_from_joblib = joblib.load('logreg_monster_classifier.pkl')
 
 def resize(img):
     size = 200, 200
@@ -51,7 +51,7 @@ def img_to_1d_greyscale(img_path):
 
 @ns.route('/')
 class IdentifyGender(Resource):
-    """Identifies gender."""
+    """Identifies if a picture contains a 'monster'."""
     @api.doc(parser=single_parser, description='Submit a picture.')
     def post(self):
         """POST route."""
@@ -97,9 +97,9 @@ class IdentifyGender(Resource):
 
         output = r[0]
 
-        LOOKUP = {0:'female', 1:'male'}
+        LOOKUP = {0:'not a monster', 1:'monster'}
 
-        return {'Gender': LOOKUP[output]}
+        return {'Monster?': LOOKUP[output]}
 
 if __name__ == '__main__':
     # app.run(debug=True)
