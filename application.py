@@ -1,4 +1,4 @@
-import boto3
+# import boto3
 import datetime
 from flask_restplus import Api, Resource, fields
 from flask import Flask, jsonify, request, make_response, abort, render_template, redirect, url_for
@@ -63,7 +63,7 @@ class IdentifyGender(Resource):
         resize('image.png')
         img = img_to_1d_greyscale('image.png')
 
-        print(img)
+        # print(img)
 
         # image_read = img.resize((200, 200))
         # image_read = img_to_1d_greyscale(image_read)
